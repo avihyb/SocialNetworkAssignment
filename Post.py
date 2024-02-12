@@ -23,14 +23,17 @@ class Post(ABC):
         self.comments.append('username:' + user.username + ' text:' + text)
         if user != self._author:
             print(f"notification to {self._author.username}: {user.username} commented on your post: {text}")
-            self._author.notify(f"{user.username} commented your post")
+            self._author.notify(f"{user.username} commented on your post")
 
     @abstractmethod
     def display(self):
-        self.display()
+        pass
 
     def __str__(self):
-        return f"{self.display()}"
+        if self.post_type == "Image":
+            return f"{self._author.username} posted a picture\n"
+        else:
+            return f"{self.display() or ''}"
 
 
 class TextPost(Post):
@@ -39,9 +42,8 @@ class TextPost(Post):
         self.content = content
 
     def display(self):
-        print(f"{self._author.username} published a post:")
-        print(f'"{self.content}"')
-        print("\n")
+        print(f"{self._author.username} published a post:\n\"{self.content}\"")
+        print()
 
 
 class ImagePost(Post):
@@ -50,6 +52,7 @@ class ImagePost(Post):
         self.image_path = image_path
 
     def display(self):
+        print("Shows picture")
         try:
             # Using Matplotlib to display the image
             img_matplotlib = plt.imread(self.image_path)
@@ -87,9 +90,10 @@ class SalePost(Post):
             print(f"{self._author.username}'s product is sold")
 
     def display(self):
-        print(f"{self._author.username} posted a product for sale:")
         if not self.is_sold:
-            print(f"For sale! {self.product}, price: {self.price}, pickup from: {self.location}")
+            print(
+                f"{self._author.username} posted a product for sale:\nFor sale! {self.product}, price: {self.price}, pickup from: {self.location}")
+            print()
         else:
+            print(f"{self._author.username} posted a product for sale:")
             print(f"Sold! {self.product}, price: {self.price}, pickup from: {self.location}")
-        print("\n")

@@ -16,7 +16,7 @@ class SocialNetwork:
 
     def __str__(self):
         print(f"{self.name} social network:")
-        return f"{self.display()}"
+        return f"{self.display() or ''}"
 
     def sign_up(self, username, password):
         if any(user.username == username for user in self.users):

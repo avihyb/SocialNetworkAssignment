@@ -15,7 +15,7 @@ class User:
         self.notifications = []
 
     def __str__(self):
-        return f"User name: {self.username}, Number of posts: {len(self.posts)}, Number of followers: {len(self.followers)}"
+        return f"User name: {self.username}, Number of posts: {len(self.posts)}, Number of followers: {len(self.followers) or ' '}"
 
     def disconnect(self):
         self.status = False
@@ -51,6 +51,7 @@ class User:
             post = TextPost(*args)
         elif post_type == "Image":
             print(f"{self.username} posted a picture")
+            print()
             post = ImagePost(*args)
         elif post_type == "Sale":
             post = SalePost(*args)
@@ -68,6 +69,8 @@ class User:
 
     def print_notifications(self):
         if self.status:
-            print(f"{self.username} notifications:")
+            print(f"{self.username}'s notifications:")
             for notification in self.notifications:
-                print(f"{notification}")
+                if notification is not None:
+                    print(f"{notification}")
+
