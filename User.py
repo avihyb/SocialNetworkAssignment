@@ -62,6 +62,8 @@ class User:
                 follower.notify(f"{self.username} has a new post")
             if post_type != "Image":
                 post.display()
+                if post.post_type == "Text":
+                    print()
             return post
         else:
             print(f"Invalid post type: {post_type}")

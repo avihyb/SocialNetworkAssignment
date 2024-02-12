@@ -43,7 +43,7 @@ class TextPost(Post):
 
     def display(self):
         print(f"{self._author.username} published a post:\n\"{self.content}\"")
-        print()
+
 
 
 class ImagePost(Post):
