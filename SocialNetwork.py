@@ -15,11 +15,8 @@ class SocialNetwork:
         print(f"The social network {name} was created!")
 
     def __str__(self):
-        result = f"{self.name} social network:"
-        display_content = self.display()
-        if display_content:
-            result += f"\n{display_content}"
-        return result
+        print(f"{self.name} social network:")
+        return f"{self.display() or ''}"
 
     def sign_up(self, username, password):
         if any(user.username == username for user in self.users):
@@ -53,8 +50,9 @@ class SocialNetwork:
         self.posts.append(post)
 
     def display(self):
-        user_list = [str(user) for user in self.users]
-        return '\n'.join(user_list).rstrip('\n')
+        for user in self.users:
+            print(user)
+
 
     def print(self):
         for user in self.users:
