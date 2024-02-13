@@ -3,7 +3,7 @@ import filecmp
 import os
 
 # Define the names of the student's and correct output files
-student_output_file = "../פתרון ובדיקה/student_output.txt"
+student_output_file = "student_output.txt"
 correct_output_file = "output.txt"
 
 
