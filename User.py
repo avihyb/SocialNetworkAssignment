@@ -1,6 +1,9 @@
 from Post import TextPost, ImagePost, SalePost
 
 
+# User class behaves as the subject in the observer design pattern.
+
+
 class User:
 
     def __init__(self, username, password):
@@ -9,7 +12,7 @@ class User:
         self.username = username
         self.password = password
         self.status = True
-        self.followers = []
+        self.followers = []  # represents the observers
         self.following = []
         self.posts = []
         self.notifications = []
@@ -75,4 +78,3 @@ class User:
             for notification in self.notifications:
                 if notification is not None:
                     print(f"{notification}")
-
