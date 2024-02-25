@@ -1,10 +1,16 @@
-
 from abc import ABC, abstractmethod
 from PIL import Image
+from matplotlib import pyplot as plt
+from enum import Enum
 
 
 # Implemented using Factory Design Pattern. A user in
 # the Social Network creates different types of 'Post'.
+class PostType(str, Enum):
+    TEXT = "Text"
+    IMAGE = "Image"
+    SALE = "Sale"
+
 
 class Post(ABC):
     def __init__(self, post_type):
@@ -38,17 +44,16 @@ class Post(ABC):
 
 class TextPost(Post):
     def __init__(self, content):
-        super().__init__("Text")
+        super().__init__(PostType.TEXT)
         self.content = content
 
     def display(self):
         print(f"{self._author.username} published a post:\n\"{self.content}\"")
 
 
-
 class ImagePost(Post):
     def __init__(self, image_path):
-        super().__init__("Image")
+        super().__init__(PostType.IMAGE)
         self.image_path = image_path
 
     def display(self):
@@ -71,7 +76,7 @@ class ImagePost(Post):
 
 class SalePost(Post):
     def __init__(self, product, price, location):
-        super().__init__("Sale")
+        super().__init__(PostType.SALE)
         self.product = product
         self.price = price
         self.location = location
@@ -97,3 +102,16 @@ class SalePost(Post):
         else:
             print(f"{self._author.username} posted a product for sale:")
             print(f"Sold! {self.product}, price: {self.price}, pickup from: {self.location}")
+
+
+class PostFactory:
+    @staticmethod
+    def create_post(post_type, content=None, image_path=None, product=None, price=None, location=None):
+        if post_type == PostType.TEXT:
+            return TextPost(content)
+        elif post_type == PostType.IMAGE:
+            return ImagePost(image_path)
+        elif post_type == PostType.SALE:
+            return SalePost(product, price, location)
+        else:
+            raise ValueError(f"Invalid post type: {post_type}")

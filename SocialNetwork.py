@@ -33,8 +33,11 @@ class SocialNetwork:
     def log_out(self, username):
         user = next((user for user in self.users if user.username == username), None)
         if user:
-            user.disconnect()
-            print(f"{username} disconnected")
+            if user.status:
+                user.disconnect()
+                print(f"{username} disconnected")
+            else:
+                print(f"{username} is already logged out.")
         else:
             print(f"{username} not found in the social network.")
 
