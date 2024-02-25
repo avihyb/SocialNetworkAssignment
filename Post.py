@@ -6,6 +6,7 @@ from enum import Enum
 
 # Implemented using Factory Design Pattern. A user in
 # the Social Network creates different types of 'Post'.
+
 class PostType(str, Enum):
     TEXT = "Text"
     IMAGE = "Image"

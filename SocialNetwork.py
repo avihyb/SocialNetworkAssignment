@@ -49,6 +49,7 @@ class SocialNetwork:
         else:
             print(f"{username} not found in the social network.")
 
+
     def add_post(self, post):
         self.posts.append(post)
 
