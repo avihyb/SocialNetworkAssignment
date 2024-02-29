@@ -2,6 +2,8 @@ from User import User
 
 
 class SocialNetwork:
+    # flag used to tell
+    # whether a social network has already been created:
     _created = False
 
     def __init__(self, name):
@@ -49,14 +51,12 @@ class SocialNetwork:
         else:
             print(f"{username} not found in the social network.")
 
-
     def add_post(self, post):
         self.posts.append(post)
 
     def display(self):
         for user in self.users:
             print(user)
-
 
     def print(self):
         for user in self.users:

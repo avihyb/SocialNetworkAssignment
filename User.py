@@ -1,9 +1,13 @@
 from Post import TextPost, ImagePost, SalePost
 
 
+class Notification:
+    def __init__(self, message, notification_type):
+        self.message = message
+        self.notification_type = notification_type
+
+
 # User class behaves as the subject in the observer design pattern.
-
-
 class User:
 
     def __init__(self, username, password):
@@ -40,9 +44,12 @@ class User:
 
     def unfollow(self, user):
         if user in self.following:
-            self.following.remove(user)
-            user.followers.remove(self)
-            print(f"{self.username} unfollowed {user.username}")
+            if self.status:
+                self.following.remove(user)
+                user.followers.remove(self)
+                print(f"{self.username} unfollowed {user.username}")
+            else:
+                print("User is not connected.")
 
     def publish_post(self, post_type, *args):
         post = None
@@ -58,19 +65,23 @@ class User:
             post = ImagePost(*args)
         elif post_type == "Sale":
             post = SalePost(*args)
+
         if post:
             post._author = self
             self.posts.append(post)
-            for follower in self.followers:
-                follower.notify(f"{self.username} has a new post")
-            if post_type != "Image":
-                post.display()
-                if post.post_type == "Text":
-                    print()
+            self.update(post)
             return post
         else:
             print(f"Invalid post type: {post_type}")
             return None
+
+    def update(self, post):
+        for follower in self.followers:
+            follower.notify(f"{self.username} has a new post")
+        if post.post_type != "Image":
+            post.display()
+            if post.post_type == "Text":
+                print()
 
     def print_notifications(self):
         if self.status:
